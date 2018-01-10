@@ -1,0 +1,3 @@
+[submodule "synthSignal"]
+	path = synthSignal
+	url = https://github.com/UAQpqd/synthSignal.git
