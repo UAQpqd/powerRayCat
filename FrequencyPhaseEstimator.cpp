@@ -7,10 +7,10 @@
 BOOST_COMPUTE_FUNCTION(bool, clCompareAgentsByScore,
                        (PowerRayCat::Agent a, PowerRayCat::Agent b),
                        {
-                           return a.score > b.score;
+                           return a.score < b.score;
                        });
 bool PowerRayCat::compareAgentsByScore(PowerRayCat::Agent a, PowerRayCat::Agent b) {
-    return a.score > b.score;
+    return a.score < b.score;
 }
 PowerRayCat::Agent PowerRayCat::FrequencyPhaseEstimator::run(bool openCL) {
 
@@ -80,7 +80,6 @@ PowerRayCat::Agent PowerRayCat::FrequencyPhaseEstimator::run(bool openCL) {
 float PowerRayCat::FrequencyPhaseEstimator::calcSignalSquaredSum() {
     float ss = std::accumulate(data->begin(),data->end(),0.0f,
                     [](float accum, float val) { return accum+val*val; });
-
     return ss;
 }
 
