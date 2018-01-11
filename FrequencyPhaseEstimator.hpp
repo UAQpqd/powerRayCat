@@ -11,16 +11,22 @@
 #include <algorithm>
 #include <boost/compute.hpp>
 
+#define kNeighboursSize parameters.popSize * (1 + 2 * parameters.modeDepth)
+
 namespace bc = boost::compute;
 
 namespace PowerRayCat {
     struct Agent { float omega, phi, score; };
+    struct CrossoverRandoms {
+        size_t delta; float omega; float phi;
+    };
     bool compareAgentsByScore(PowerRayCat::Agent a, PowerRayCat::Agent b);
     enum class GoalFunction { MaxGenerations, EpsilonReached };
     struct FittingParameters {
         size_t popSize = 1800;
         size_t maxGenerations = 80;
         GoalFunction goalFunction = GoalFunction::MaxGenerations;
+        unsigned int modeDepth = 1;
         float epsilon = 0.05f;
         float crossOverProbability = 0.7f;
         float differentialFactor = 0.7f;
@@ -56,8 +62,15 @@ namespace PowerRayCat {
                 const float omegaMin,
                 const float omegaMax,
                 const float phiMax);
+        bool isEpsilonReachedTrue(const Population &X);
+        std::vector<size_t> calculateNeighbours(const size_t &bestAgentId);
+        float crossoverProbById(size_t)
+        void createAuxPopulation(std::vector<Agent> &X, std::vector<Agent> &Y,
+        std::vector<CrossoverRandoms> &crossoverRandoms);
     };
 }
 
 BOOST_COMPUTE_ADAPT_STRUCT(PowerRayCat::Agent, Agent, (omega,phi,score));
+BOOST_COMPUTE_ADAPT_STRUCT(PowerRayCat::CrossoverRandoms, CrossoverRandoms, (delta,omega,phi));
+
 #endif //POWERRAYCAT_FREQUENCYPHASEESTIMATOR_HPP

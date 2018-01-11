@@ -14,6 +14,7 @@ namespace PowerRayCatTest {
                 1800,
                 80,
                 PowerRayCat::GoalFunction::MaxGenerations,
+                1,
                 0.05f,
                 0.7f,
                 0.7f,
@@ -45,7 +46,7 @@ namespace PowerRayCatTest {
         }
     };
 
-    TEST_F(SyntheticWaveform,OpenCLAreAgentsSorted) {
+    TEST_F(SyntheticWaveform,DISABLED_OpenCLAreAgentsSorted) {
         PowerRayCat::FrequencyPhaseEstimator estimator(
                 signal->lastGen,fittingParameters
         );
@@ -58,7 +59,7 @@ namespace PowerRayCatTest {
     }
 
 
-    TEST_F(SyntheticWaveform,AreAgentsSorted) {
+    TEST_F(SyntheticWaveform,DISABLED_AreAgentsSorted) {
         PowerRayCat::FrequencyPhaseEstimator estimator(
                 signal->lastGen,fittingParameters
         );
@@ -77,7 +78,7 @@ namespace PowerRayCatTest {
         auto bestAgent = estimator.run(true);
         float percentage =
                 bestAgent.score/estimator.signalSquaredSum;
-        ASSERT_LE(percentage,0.05f);
+        ASSERT_LE(percentage,0.000005f);
     }
 
     TEST_F(SyntheticWaveform,IsFittingGoalReached) {
@@ -87,7 +88,7 @@ namespace PowerRayCatTest {
         auto bestAgent = estimator.run(false);
         float percentage =
                 bestAgent.score/estimator.signalSquaredSum;
-        ASSERT_LE(percentage,0.05f);
+        ASSERT_LE(percentage,0.000005f);
     }
 }
 
